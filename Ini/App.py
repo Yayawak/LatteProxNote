@@ -2,8 +2,8 @@ from PyQt5.QtWidgets import QApplication, QWidget, \
     QPushButton, QAction, QTabWidget, QVBoxLayout, \
     QMainWindow, QMenu, QMenuBar, QHBoxLayout
 from PyQt5.QtCore import Qt, pyqtSlot
-from LessonMenuBar import LessonMenuBar
-from MainWidget import MainWidget
+from Ini.LessonMenuBar import LessonMenuBar
+from Ini.MainWidget import MainWidget
 
 class App(QMainWindow):
 

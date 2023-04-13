@@ -93,6 +93,7 @@ class ImageProjectionCanvas(FigureCanvasQTAgg):
                         [p1Proj[2], p2Proj[2]]
                         , color='blue')
 
+    # * not successfully implemented now
     def _drawPlaneXY(self):
         xx, yy = np.meshgrid(
             np.linspace(-5, 5, 100),

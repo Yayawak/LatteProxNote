@@ -1,8 +1,8 @@
 from PyQt5.QtWidgets import QWidget, QHBoxLayout, QPushButton, QMenuBar \
     , QGridLayout, QPlainTextEdit, QVBoxLayout
 # from PyQt5.QtCore import *
-from LessonTree import LessonTreeWidget
-from DisplayWidget import DisplayWidget
+from Ini.LessonTree import LessonTreeWidget
+from Ini.DisplayWidget import DisplayWidget
 
 class MainWidget(QWidget):
     def __init__(self):
@@ -22,9 +22,12 @@ class MainWidget(QWidget):
         selectedItem = self.lessonTreeWidget.currentItem()
         # selectedItem.
         # if selectedItem is not None:
-        if selectedItem is not None and selectedItem.childCount() == 0:
+        # if selectedItem is not None and selectedItem.childCount() == 0:
+        if selectedItem is not None: # ? this is for making BigChapter can lay some  introducion part before dive in real world
             # self.displayWidget.lb.text = selectedItem
-            self.displayWidget.updateContent(str(selectedItem))
+            # self.displayWidget.updateContent(str(selectedItem))
+            # ! potential bug if selectedItem is not widget
+            self.displayWidget.updateCurrentWidget(selectedItem.widget)
             print(selectedItem)
         # else:
             #

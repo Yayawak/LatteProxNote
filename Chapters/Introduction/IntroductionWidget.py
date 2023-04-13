@@ -13,6 +13,7 @@ class IntroductionWidget(QWidget):
                     """)
         layout.addWidget(lb)
 
-        canvas = ImageProjectionCanvas()
+        # todo : jump between sub sections (making outlier)
+        # canvas = ImageProjectionCanvas()
 
-        layout.addWidget(canvas)
+        # layout.addWidget(canvas)
