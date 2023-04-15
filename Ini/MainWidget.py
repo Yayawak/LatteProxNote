@@ -1,8 +1,9 @@
 from PyQt5.QtWidgets import QWidget, QHBoxLayout, QPushButton, QMenuBar \
-    , QGridLayout, QPlainTextEdit, QVBoxLayout
+    , QGridLayout, QPlainTextEdit, QVBoxLayout, QLabel
 # from PyQt5.QtCore import *
-from Ini.LessonTree import LessonTreeWidget
+from Ini.IndexTree.LessonTree import LessonTreeWidget
 from Ini.DisplayWidget import DisplayWidget
+from Ini.InterestingTopicsTree.InterestingTree import InterestingTree
 
 class MainWidget(QWidget):
     def __init__(self):
@@ -15,7 +16,12 @@ class MainWidget(QWidget):
             connect(self._updateDisplayWidget)
         self.displayWidget = DisplayWidget()
 
-        layout.addWidget(self.lessonTreeWidget, 3)
+        vLayout = QVBoxLayout()
+        layout.addLayout(vLayout, 3)
+        vLayout.addWidget(QLabel("Image processing"))
+        vLayout.addWidget(self.lessonTreeWidget)
+        vLayout.addWidget(QLabel("Interesting topics"))
+        vLayout.addWidget(InterestingTree())
         layout.addWidget(self.displayWidget, 7)
 
     def _updateDisplayWidget(self):
@@ -28,7 +34,7 @@ class MainWidget(QWidget):
             # self.displayWidget.updateContent(str(selectedItem))
             # ! potential bug if selectedItem is not widget
             self.displayWidget.updateCurrentWidget(selectedItem.widget)
-            print(selectedItem)
+            # print(selectedItem)
         # else:
             #
             # self.displayWidget.update

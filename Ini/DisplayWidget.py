@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import QWidget, QLabel, QVBoxLayout, \
     QTextEdit
 from Chapters.Introduction.IntroductionWidget import IntroductionWidget
+from Chapters.Introduction.ImageConstructionProgram.ImageConstructCanvas import ImageConstructCanvas
 
 class DisplayWidget(QWidget):
     def __init__(self):
