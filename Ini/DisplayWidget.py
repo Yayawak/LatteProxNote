@@ -2,6 +2,7 @@ from PyQt5.QtWidgets import QWidget, QLabel, QVBoxLayout, \
     QTextEdit
 from Chapters.Introduction.IntroductionWidget import IntroductionWidget
 from Chapters.Introduction.ImageConstructionProgram.ImageConstructCanvas import ImageConstructCanvas
+from Test.DrawLine3dByPoint import TreeDLinePlotWidget
 
 class DisplayWidget(QWidget):
     def __init__(self):
@@ -16,6 +17,7 @@ class DisplayWidget(QWidget):
         # self.updateCurrentWidget(Intr)
         # intro = IntroductionWidget()
         # layout.addWidget(intro)
+        self.layout.addWidget(TreeDLinePlotWidget())
 
 
 
