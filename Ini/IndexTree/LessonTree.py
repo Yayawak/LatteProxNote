@@ -6,6 +6,7 @@ from Chapters.Introduction.ImageProjectionCanvas import ImageProjectionCanvas
 from Chapters.Introduction.SampleQuantation.SampQuant import SampQuant
 from Chapters.Introduction.ImageConstructionProgram.ImageConstructCanvas import ImageConstructCanvas
 from Chapters.BinaryImageProcessing.Thresholds.Thresholding import ThresholdDemo
+from Chapters.BinaryImageProcessing.BinImgMainWidget import BinImgMainWidget
 
 class LessonTreeWidget(QTreeWidget):
     def __init__(self):
@@ -24,10 +25,10 @@ class LessonTreeWidget(QTreeWidget):
 
         # * -------------------------- chapter 2  -------------------------
         binaryImageProcessing = TreeWidgetChapter(
-            self, "binary image processing"
+            self, "binary image processing", BinImgMainWidget()
         )
         TreeWidgetChapter(binaryImageProcessing, "Thresholding", ThresholdDemo())
-        TreeWidgetChapter(binaryImageProcessing, "Geometric Properties")
+        geometricProperties = TreeWidgetChapter(binaryImageProcessing, "Geometric Properties")
         TreeWidgetChapter(binaryImageProcessing, "Projections")
         TreeWidgetChapter(binaryImageProcessing, "Run-lenght Encoding")
         binaryAlgotithms = TreeWidgetChapter(binaryImageProcessing, "Binary Algorithm")

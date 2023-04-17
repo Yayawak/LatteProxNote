@@ -4,10 +4,11 @@ from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
 from matplotlib import pyplot as plt
 import numpy as np
 import cv2
-# from cv2 import cv2
+# from cv2.
 import os
 from PyQt5.QtGui import QPixmap
 from PyQt5.Qt import Qt
+
 
 class ThresholdDemo(QWidget):
     def __init__(self):
@@ -15,51 +16,43 @@ class ThresholdDemo(QWidget):
         layout = QVBoxLayout()
         self.setLayout(layout)
 
-        # self.thresholdDial = QDial()
-        # self.thresholdDial.setMinimum(0)
-        # self.thresholdDial.setMaximum(255)
         self.thresholdSlider = QSlider(Qt.Horizontal)
-        self.thresholdSlider.setMinimum(0)
-        self.thresholdSlider.setMaximum(255)
+        self.thresholdSlider.setRange(0, 255)
+        self.thresholdSlider.setSingleStep(1)
+        self.thresholdSlider.setValue(50)
         self.tshLabel = QLabel()
 
         self.canvas = ThresholdCanvas()
-        # self.thresholdDial.valueChanged.connect(lambda: self.canvas.plot(self.thresholdDial.value()))
-        self.thresholdSlider.valueChanged.connect(self.onSliderChange)
-        sliderLayout = QHBoxLayout()
-        sliderLayout.addWidget(self.thresholdSlider)
-        sliderLayout.addWidget(self.tshLabel)
-        layout.addLayout(sliderLayout)
+        self.thresholdSlider.valueChanged.connect(self.on_slider_change)
+        slider_layout = QHBoxLayout()
+        slider_layout.addWidget(self.thresholdSlider)
+        slider_layout.addWidget(self.tshLabel)
+        layout.addLayout(slider_layout)
         layout.addWidget(self.canvas)
 
-    def onSliderChange(self):
+    def on_slider_change(self):
         val = self.thresholdSlider.value()
         self.canvas.plot(val)
         self.tshLabel.setText(str(val))
+
 
 class ThresholdCanvas(FigureCanvasQTAgg):
     def __init__(self):
         fig = plt.figure()
         super().__init__(fig)
-        self.ax = fig.add_subplot(111)
+        self.ax1 = fig.add_subplot(121)
+        self.ax2 = fig.add_subplot(122)
         scriptDir = os.path.dirname(os.path.abspath(__file__))
         fullPath = os.path.join(scriptDir, "cloud strife.webp")
-        self.originImg = cv2.imread(fullPath, cv2.IMREAD_GRAYSCALE)
-        self.ax.imshow(self.originImg, cmap='gray')
+        self.bgr_image = cv2.imread(fullPath)
+        self.gray_image = cv2.cvtColor(self.bgr_image, cv2.COLOR_BGR2GRAY)
+        self.ax1.imshow(self.bgr_image[:, :, ::-1])
+        self.ax2.imshow(self.gray_image, cmap='gray')
+
     def plot(self, threshold_value):
         ...
-        # bin_img = self.originImg > threshold_value
-        bin_img = np.array(self.originImg > threshold_value, dtype=int)
-        print(bin_img)
-        self.ax.imshow(bin_img, cmap='gray')
-        self.draw()
-        self.ax.cla()
-        # self.draw()
+        bin_img = np.array(self.gray_image > threshold_value, dtype=int)
 
-    # def getImage(self):
-    #     pxmap = QPixmap(fullPath)
-    #     return pxmap.scaled(self.width(),
-    #                         self.height(),
-    #                         aspectRatioMode=QtCore.Qt.KeepAspectRatio,
-    #                         transformMode=QtCore.Qt.SmoothTransformation
-    #                         )
+        self.ax2.imshow(bin_img, cmap='gray')
+        self.draw()
+        self.ax2.cla()
