@@ -30,7 +30,7 @@ class GeomPropertiesDemoWidget(QWidget):
         checkboxs_layout = QVBoxLayout()
         self.is_circle_checkbox = QCheckBox("Circle")
         self.is_triangle_checkbox = QCheckBox("Triangle")
-        self.is_triangle_checkbox.setDown(True)
+        self.is_triangle_checkbox.setChecked(True)
         checkboxs_layout.addWidget(self.is_circle_checkbox)
         checkboxs_layout.addWidget(self.is_triangle_checkbox)
 
@@ -59,13 +59,21 @@ class GeomPropertiesDemoWidget(QWidget):
                          self.is_triangle_checkbox.isChecked(),
                          self.is_circle_checkbox.isChecked())
         self.dialLabel.setText(str(val))
+        # if not self.is_triangle_checkbox.isChecked():
+        #     self.ax1.cla()
+        #     self.ax2.cla()
+
 
     class Canva(FigureCanvasQTAgg):
         def __init__(self, outer_instance):
             self.outer_instance = outer_instance
             self.fig = plt.figure()
             super().__init__(self.fig)
-            self.ax = self.fig.add_subplot(111)
+            self.ax = self.fig.add_subplot(221)
+            self.ax1 = self.fig.add_subplot(222, sharey=self.ax)
+            self.ax2 = self.fig.add_subplot(223, sharex=self.ax)
+            self.ax1.set_visible(False)
+            self.ax2.set_visible(False)
 
             self.image = self.random_shape(True, False)
             self.ax.imshow(self.image, cmap='binary')
@@ -118,7 +126,7 @@ class GeomPropertiesDemoWidget(QWidget):
 
         def plot(self, threshold_value, isTriangle, isCircle):
             ...
-            self.ax = self.fig.add_subplot(111)
+            # self.ax = self.fig.add_subplot(111)
             bin_image = self.image = self.random_shape(isTriangle, isCircle)
             orientator = ImageOrientation()
             orientator.calculate_moments(bin_image)
@@ -147,24 +155,26 @@ class GeomPropertiesDemoWidget(QWidget):
                 # fig, axs = plt.subplots(2, 2, sharex=True, sharey=True)
                 # self.fig = fig
                 # print("len of axs = ", len(axs))
-                self.ax = self.fig.add_subplot(221)
+                # self.ax = self.fig.add_subplot(221)
                 # self.ax = axs[0][0]
                 self.ax.imshow(self.image, cmap='binary')
-                ax1 = self.fig.add_subplot(222, sharey=self.ax)
-                ax2 = self.fig.add_subplot(223, sharex=self.ax)
                 # ax1 = axs[0][1]
                 # ax2 = axs[1][0]
                 ImageProjection.static_bin_image = self.image
                 v = ImageProjection.projectionV()
                 h = ImageProjection.projectionH()
-                ax1.barh(np.arange(len(h)), h)
-                ax2.bar(np.arange(len(v)), v)
+                self.ax1.barh(np.arange(len(h)), h)
+                self.ax2.bar(np.arange(len(v)), v)
                 self.draw()
                 self.ax.cla()
-                ax1.cla()
-                ax2.cla()
-                self.fig.clf()
+                self.ax1.cla()
+                self.ax2.cla()
+                self.ax1.set_visible(True)
+                self.ax2.set_visible(True)
+                # self.fig.clf()
             else:
                 self.draw()
                 self.ax.cla()
+                self.ax1.set_visible(False)
+                self.ax2.set_visible(False)
 

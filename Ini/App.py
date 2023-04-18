@@ -1,8 +1,8 @@
-from PyQt5.QtWidgets import QApplication, QWidget, \
-    QPushButton, QAction, QTabWidget, QVBoxLayout, \
-    QMainWindow, QMenu, QMenuBar, QHBoxLayout
-from PyQt5.QtCore import Qt, pyqtSlot
+from PyQt5.QtWidgets import QMainWindow
+from PyQt5.QtCore import Qt
 from Ini.MainWidget import MainWidget
+from Helpers.GridPainter import GridPainter
+from SideProjects.DigitRecongnition.DigitRegDemo import DigitRegDemo
 
 class App(QMainWindow):
 
@@ -15,6 +15,10 @@ class App(QMainWindow):
 
 
         self.mainWidget = MainWidget()
-        self.setCentralWidget(self.mainWidget)
+        # self.setCentralWidget(self.mainWidget)
 
+        # self.setCentralWidget(BinaryAlgorithmsDemo())
+        # self.setCentralWidget(GridPainter(100, 100))
+        # self.setCentralWidget(GridPainter(20,20))
+        self.setCentralWidget(DigitRegDemo())
         self.show()
