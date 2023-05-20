@@ -7,6 +7,7 @@ from Chapters.Introduction.SampleQuantation.SampQuant import SampQuant
 from Chapters.Introduction.ImageConstructionProgram.ImageConstructCanvas import ImageConstructCanvas
 from Chapters.BinaryImageProcessing.Thresholds.Thresholding import ThresholdDemo
 from Chapters.BinaryImageProcessing.BinImgMainWidget import BinImgMainWidget
+from Calculus.SequenceSeries.IntroductionToSeqSer import IntroductionToSeqSer
 
 class LessonTreeWidget(QTreeWidget):
     def __init__(self):
@@ -16,6 +17,11 @@ class LessonTreeWidget(QTreeWidget):
         self.setColumnWidth(1, 50)
 
         # todo : plan layout of this book store it in data collector mvc 'M'
+        # * ----- chapter 0 : no really image processing but calculus  -------------------------
+        TreeWidgetChapter(self, "sequence and series", IntroductionToSeqSer())
+
+
+
         # * -------------------------- chapter 1  -------------------------
         introductionItem = TreeWidgetChapter(
             self, "introduction", IntroductionWidget())

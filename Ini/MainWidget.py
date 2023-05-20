@@ -4,8 +4,19 @@ from PyQt5.QtWidgets import QWidget, QHBoxLayout, QPushButton, QMenuBar \
 from Ini.IndexTree.LessonTree import LessonTreeWidget
 from Ini.DisplayWidget import DisplayWidget
 from Ini.InterestingTopicsTree.InterestingTree import InterestingTree
+# from pydantic import BaseModel
+
+# class MainWidget(QWidget, BaseModel):
+# class MainModel(BaseModel):
+#     pass
+# class QWidgetModel(QWidget):
+#     pass
+# class MainWidget(QWidgetModel, MainModel):
+
 
 class MainWidget(QWidget):
+    # displayWidget: DisplayWidget
+
     def __init__(self):
         QWidget.__init__(self)
         layout = QHBoxLayout()

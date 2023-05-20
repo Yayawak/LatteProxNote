@@ -1,4 +1,3 @@
-import sys
 from PyQt5.QtWidgets import QLabel, QLineEdit, QPushButton, QWidget, \
     QVBoxLayout, QHBoxLayout, QDial, QSlider
 from PyQt5.QtCore import Qt
