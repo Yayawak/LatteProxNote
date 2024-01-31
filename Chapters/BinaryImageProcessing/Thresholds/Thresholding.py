@@ -45,9 +45,9 @@ class ThresholdCanvas(FigureCanvasQTAgg):
         scriptDir = os.path.dirname(os.path.abspath(__file__))
         fullPath = os.path.join(scriptDir, "cloud strife.webp")
         self.bgr_image = cv2.imread(fullPath)
-        self.gray_image = cv2.cvtColor(self.bgr_image, cv2.COLOR_BGR2GRAY)
-        self.ax1.imshow(self.bgr_image[:, :, ::-1])
-        self.ax2.imshow(self.gray_image, cmap='gray')
+        # self.gray_image = cv2.cvtColor(self.bgr_image, cv2.COLOR_BGR2GRAY)
+        # self.ax1.imshow(self.bgr_image[:, :, ::-1])
+        # self.ax2.imshow(self.gray_image, cmap='gray')
 
     def plot(self, threshold_value):
         ...

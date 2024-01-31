@@ -8,6 +8,7 @@ from Chapters.Introduction.ImageConstructionProgram.ImageConstructCanvas import 
 from Chapters.BinaryImageProcessing.Thresholds.Thresholding import ThresholdDemo
 from Chapters.BinaryImageProcessing.BinImgMainWidget import BinImgMainWidget
 from Calculus.SequenceSeries.IntroductionToSeqSer import IntroductionToSeqSer
+from Chapters.BinaryImageProcessing.BinaryAlgorithm.ConnnectedComponentLabeling import ConnectedComponentLabeling
 
 class LessonTreeWidget(QTreeWidget):
     def __init__(self):
@@ -38,7 +39,7 @@ class LessonTreeWidget(QTreeWidget):
         TreeWidgetChapter(binaryImageProcessing, "Projections")
         TreeWidgetChapter(binaryImageProcessing, "Run-lenght Encoding")
         binaryAlgotithms = TreeWidgetChapter(binaryImageProcessing, "Binary Algorithm")
-        TreeWidgetChapter(binaryAlgotithms, "component labeling")
+        TreeWidgetChapter(binaryAlgotithms, "component labeling", ConnectedComponentLabeling())
         TreeWidgetChapter(binaryAlgotithms, "size filter")
         TreeWidgetChapter(binaryAlgotithms, "euler number")
         TreeWidgetChapter(binaryAlgotithms, "region boundary")

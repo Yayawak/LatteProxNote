@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5.QtCore import Qt
 from Ini.MainWidget import MainWidget
+from Chapters.BinaryImageProcessing.BinaryAlgorithm.ConnnectedComponentLabeling import ConnectedComponentLabeling
 # from Helpers.GridPainter import GridPainter
 # from SideProjects.DigitRecongnition.DigitRegDemo import DigitRegDemo
 # from Calculus.SequenceSeries.IntroductionToSeqSer import IntroductionToSeqSer
@@ -15,12 +16,10 @@ class App(QMainWindow):
         self.setWindowTitle(self.title)
         self.setWindowFlag(Qt.WindowStaysOnTopHint)
 
-        # import PyQt5
-        # print(PyQt5.__file__)
-
         self.mainWidget = MainWidget()
         self.setCentralWidget(self.mainWidget)
-
+        # ccl = ConnectedComponentLabeling()
+        # self.setCentralWidget(ccl)
         # self.setCentralWidget(IntroductionToSeqSer())
         # self.setCentralWidget(BinaryAlgorithmsDemo())
         # self.setCentralWidget(GridPainter(100, 100))

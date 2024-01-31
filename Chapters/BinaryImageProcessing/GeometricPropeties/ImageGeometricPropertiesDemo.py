@@ -20,8 +20,8 @@ class GeomPropertiesDemoWidget(QWidget):
         self.setLayout(layout)
 
         self.dial = QDial()
-        self.dial.setRange(0.1, 100)
-        self.dial.setSingleStep(0.1)
+        self.dial.setRange(0, 100)
+        self.dial.setSingleStep(1)
         self.dial.setValue(50)
         # self.dial.setMaximumWidth(self.width() * 0.3)
         # self.dial.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
@@ -56,8 +56,8 @@ class GeomPropertiesDemoWidget(QWidget):
     def on_input_change(self):
         val = self.dial.value() / 100
         self.canvas.plot(val,
-                         self.is_triangle_checkbox.isChecked(),
-                         self.is_circle_checkbox.isChecked())
+                        self.is_triangle_checkbox.isChecked(),
+                        self.is_circle_checkbox.isChecked())
         self.dialLabel.setText(str(val))
         # if not self.is_triangle_checkbox.isChecked():
         #     self.ax1.cla()

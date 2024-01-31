@@ -56,10 +56,10 @@ class TreeDLinePlotWidget(QWidget):
         painter = QPainter(self)
         pen = QPen(Qt.black, 3)
         painter.setPen(pen)
-        painter.drawLine(
-            0, self.height() / 2,
-            self.width(), self.height() / 2
-        )
+        # painter.drawLine(
+        #     0, self.height() / 2,
+        #     self.width(), self.height() / 2
+        # )
 
     def plot(self):
         lays = [self.dialTwoPointsLayout[i] for i in range(2)]

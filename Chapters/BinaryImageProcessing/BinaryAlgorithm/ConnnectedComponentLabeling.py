@@ -1,11 +1,20 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from PyQt5.QtWidgets import (QLabel, QDial, QWidget, QSlider,
+    QVBoxLayout, QHBoxLayout, QPushButton, QDial, QSlider,
+    QTextEdit, QLineEdit
+    )
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
 import networkx as nx
-import matplotlib as mpl
+# import matplotlib as mpl
+from Helpers.QWidgetCanva import QWidgetCanva
+import time
+from PyQt5.QtCore import QTimer, QPropertyAnimation, QRect, QPoint
 
 
-class ConnectedComponentLabeling:
-    def __init__(self):
+# class ConnectedComponentLabeling(QWidget):
+class ConnectedComponentLabeling(QWidgetCanva):
+    def _debug(self):
         size = (6, 6)
         # size = (10, 10)
         # np.random.seed(0)
@@ -40,26 +49,82 @@ class ConnectedComponentLabeling:
         self.relabel()
         print(self.labelImg)
 
-        fig, axs = plt.subplots(ncols=2, figsize=[8,8])
+        fig, axs = plt.subplots(ncols=2, figsize=[8, 8])
         axs[0].imshow(self.img, cmap='gray')
         axs[1].imshow(self.labelImg, cmap='inferno')
         # print()
         plt.show()
 
+    def __init__(self):
+        super().__init__(2)
+        layout = QVBoxLayout()
+        self.setLayout(layout)
+
+        # size = (6, 6)
+        # # size = (10, 10)
+        # # size = (100, 100)
+        # # np.random.seed(0)
+        # self.img = np.random.choice([0, 1], size=size)
+        # # self.img = np.random.uniform(5, 1, size=size) > 4
+        # self.labelImg = np.zeros_like(self.img)
+        # self.equivalentTable = []
+
+        layout.addWidget(self.canva)
+
+        self.start_anim_btn = QPushButton("Start Animation")
+        self.start_anim_btn.clicked.connect(self._start_animation)
+        layout.addWidget(self.start_anim_btn)
+
+        self.x_size_line_edit = QLineEdit()
+        self.y_size_line_edit = QLineEdit()
+        self.img_size_group_layout = QHBoxLayout()
+        self.img_size_group_layout.addWidget(self.x_size_line_edit)
+        self.img_size_group_layout.addWidget(self.y_size_line_edit)
+
+        layout.addLayout(self.img_size_group_layout)
+        # self.dummy_btn = QPushButton("Dummy")
+        # self.dummy_btn.clicked.connect(self._update_label_img)
+        # layout.addWidget(self.dummy_btn)
+
+    def _start_animation(self):
+        size = (
+            int(self.x_size_line_edit.text()),
+            int(self.y_size_line_edit.text())
+        )
+        # size = (6, 6)
+        self.img = np.random.choice([0, 1], size=size)
+        # self.img = np.random.uniform(5, 1, size=size) > 4
+        self.labelImg = np.zeros_like(self.img)
+        self.equivalentTable = []
+
+        self.canva.axs[0].imshow(self.img, cmap='gray')
+        self.canva.axs[1].imshow(self.labelImg, cmap='rainbow')
+        # self.labelImg = np.random.normal(5, 3, size=self.labelImg.shape)
+        # self._update_label_img()
+        # animaiton = QPropertyAnimation(self.canva, b"pos")
+        self.labelPixel()
+        self.relabel()
+
+    def re_draw_label_img(self):
+        # timer = QTimer()
+        # timer.timeout.connect(self._update_label_img)
+        # timer.start(20)
+        # time.sleep(100 / 1000)
+        # time.sleep(20 / 1000)
+        # time.sleep(40 / 1000)
+        self._update_label_img()
+
+    def _update_label_img(self):
+        print(self.labelImg)
+        # self.canva.axs[0].imshow(self.img, cmap='gray')
+        self.canva.axs[1].clear()
+        self.canva.axs[1].imshow(self.labelImg, cmap='viridis')
+        self.canva.draw()
+        # self.canva.pos.
+
+        # self.canva.axs[1].cla()
+
     def getEquivalentSet(self):
-        # equivalent_list = [list(subset) for subset in self.equivalentTable]
-        # final_list = []
-        # for subset in equivalent_list:
-        #     merged = False
-        #     for i, existing_subset in enumerate(final_list):
-        #         if any(label in existing_subset for label in subset):
-        #             final_list[i] = list(set(existing_subset)
-        #                 | set(subset))
-        #             merged = True
-        #             break
-        #     if not merged:
-        #         final_list.append(subset)
-        # return [list(set(subset)) for subset in final_list]
         G = nx.Graph()
 
         equivalent_list = [list(subset) for subset in self.equivalentTable]
@@ -73,37 +138,7 @@ class ConnectedComponentLabeling:
         # plt.show()
 
     def relabel(self):
-        # equivalentDict = {}
-        # for equivalent_labels in self.equivalentSet:
-        #     root_label = min(equivalent_labels)
-        #     for label in equivalent_labels:
-        #         equivalentDict[label] = root_label
-        # print("equivalent Dict !!")
-        # print(equivalentDict)
-        # for i in range(self.labelImg.shape[0]):
-        #     for j in range(self.labelImg.shape[1]):
-        #         if self.labelImg[i, j] != 0:
-        #             self.labelImg[i, j] = equivalentDict[self.labelImg[i, j]]
-        # ? v2
-        # equivalent_list = [list(subset) for subset in self.equivalentSet]
-        # print("eqv list")
-        # print(equivalent_list)
-        # # unique_labels = sorted(set(label for subset in equivalent_list
-        # #     for label in subset))
-        # # print("unique label")
-        # # print(unique_labels)
-        # print()
-        # final_list = []
-        # for subset in equivalent_list:
-        #     if not any(set(subset).issubset(s) for s in final_list):
-        #         final_list.append(subset)
-
-        # print("final list")
-        # print(final_list)
-        # ? v3
         equivalent_set = self.getEquivalentSet()
-        # for subset in equivalent_set:
-        #     for label in subset:
         for i in range(self.labelImg.shape[0]):
             for j in range(self.labelImg.shape[1]):
                 color = self.labelImg[i, j]
@@ -111,6 +146,7 @@ class ConnectedComponentLabeling:
                     for sub_list in equivalent_set:
                         if set([color]).issubset(set(sub_list)):
                             self.labelImg[i, j] = min(sub_list)
+                            self.re_draw_label_img()
 
     def labelPixel(self):
         label: int = 0
@@ -125,8 +161,11 @@ class ConnectedComponentLabeling:
                     # ? Some of left, top already have label
                     if (topLabeled):
                         self.labelImg[i, j] = self.labelImg[i, j - 1]
+                        self.re_draw_label_img()
+
                     elif (leftLabeled):
                         self.labelImg[i, j] = self.labelImg[i - 1, j]
+                        self.re_draw_label_img()
                     if (leftLabeled and topLabeled):
                         # ? Both have the same label
                         if (self.labelImg[i - 1, j]
@@ -139,10 +178,12 @@ class ConnectedComponentLabeling:
                                 self.labelImg[i - 1, j],
                                 self.labelImg[i, j - 1],
                             ])
+                        self.re_draw_label_img()
                     # ? no left, no right both
                     if (not leftLabeled and not topLabeled):
                         label += 1
                         self.labelImg[i, j] = label
+                        self.re_draw_label_img()
                         self.equivalentTable.append([
                             self.labelImg[i, j],
                             self.labelImg[i, j],
@@ -154,3 +195,11 @@ class ConnectedComponentLabeling:
         if (x < 0 or x > len(self.img[0] - 1)):
             return True
         return False
+
+
+# class CCCanva(FigureCanvasQTAgg):
+#     def __init__(self):
+#         fig = plt.figure()
+#         super().__init__(fig)
+#         self.ax1 = fig.add_subplot(1, 2, 1)
+#         self.ax2 = fig.add_subplot(1, 2, 2)
